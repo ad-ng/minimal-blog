@@ -9,6 +9,8 @@ CREATE TABLE "User" (
     "names" TEXT NOT NULL,
     "phoneNumber" TEXT,
     "role" "Role" NOT NULL DEFAULT 'USER',
+    "created" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "updated" TIMESTAMP(3) NOT NULL,
 
     CONSTRAINT "User_pkey" PRIMARY KEY ("id")
 );
@@ -19,6 +21,8 @@ CREATE TABLE "Blog" (
     "title" TEXT NOT NULL,
     "description" TEXT NOT NULL,
     "userId" INTEGER NOT NULL,
+    "created" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "updated" TIMESTAMP(3) NOT NULL,
 
     CONSTRAINT "Blog_pkey" PRIMARY KEY ("id")
 );
