@@ -25,4 +25,19 @@ export class BlogService {
             data: myBlog
         }
     }
+
+    async updateBlog(id, dto){
+        const myBlog = await this.prisma.blog.update({
+            where: { id },
+            data: {
+                title: dto.title,
+                description: dto.description
+            }
+        })
+        delete myBlog.id
+        return {
+            message: `data updated successfully`,
+            data: myBlog
+        }
+    }
 }
