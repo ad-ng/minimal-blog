@@ -36,6 +36,14 @@ export class UserService {
                 }
             }
         }
+    }
 
+    async deleteMe(current){
+        const user = await this.prisma.users.delete({
+            where: { id: current.sub }
+        })
+        return {
+            message: 'user deleted successfully'
+        }
     }
 }
