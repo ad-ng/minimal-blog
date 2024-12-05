@@ -5,7 +5,9 @@ import { PrismaService } from 'src/prisma/prisma.service';
 export class BlogService {
     constructor(private prisma: PrismaService){}
     async allBlogs(){
-        const myBlogs =  await this.prisma.blog.findMany()
+        const myBlogs =  await this.prisma.blog.findMany({
+            orderBy: [ { id: 'desc' } ]
+        })
         return {
             message: 'blogs found successfully',
             data: myBlogs
