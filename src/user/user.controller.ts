@@ -10,7 +10,6 @@ export class UserController {
     @UseGuards(AuthGuard('jwt'))
     @Get('me')
     async current(@Req() req: Request){
-        //return await this.userService.getCurrentUser(5)
-        return req.user
+        return await this.userService.getCurrentUser(req.user)
     }
 }
