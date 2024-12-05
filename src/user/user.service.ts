@@ -21,7 +21,8 @@ export class UserService {
                 data: {
                     names: dto.names,
                     email: dto.email,
-                    password: hashedPW
+                    password: hashedPW,
+                    phoneNumber: dto.phoneNumber
                     }
             })
             delete user.id
