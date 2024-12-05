@@ -10,7 +10,7 @@ export class AuthService {
         private jwt: JwtService
     ){}
     async login(dto){
-        const user = await this.prisma.users.findUnique({
+        const user = await this.prisma.user.findUnique({
             where: {
                 email: dto.email
             }
@@ -27,7 +27,7 @@ export class AuthService {
 
     async register(dto){
         const hash:string =  await argon.hash(dto.password)
-        const user =  await this.prisma.users.create({
+        const user =  await this.prisma.user.create({
             data: {
                 password: hash,
                 email: dto.email,

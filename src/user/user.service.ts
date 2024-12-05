@@ -7,16 +7,16 @@ import * as argon from 'argon2'
 export class UserService {
     constructor(private prisma: PrismaService){}
     async getCurrentUser(current){
-        const user:object = await this.prisma.users.findUnique({
+        const newUser:object = await this.prisma.user.findUnique({
             where: { id: current.sub }
         })
-        return user
+        return newUser
     }
 
     async updateMe(current, dto){
         const hashedPW = await argon.hash(dto.password)
         try {
-            const user = await this.prisma.users.update({
+            const newUser = await this.prisma.user.update({
                 where: { email: current.email },
                 data: {
                     names: dto.names,
@@ -25,10 +25,10 @@ export class UserService {
                     phoneNumber: dto.phoneNumber
                     }
             })
-            delete user.id
+            delete newUser.id
             return {
                 message: 'data updated successfully',
-                data: user
+                data: newUser
             }
         } catch (error) {
             if(error instanceof PrismaClientKnownRequestError){
@@ -40,7 +40,7 @@ export class UserService {
     }
 
     async deleteMe(current){
-        const user = await this.prisma.users.delete({
+        const newUser = await this.prisma.user.delete({
             where: { id: current.sub }
         })
         return {
