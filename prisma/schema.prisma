@@ -13,9 +13,25 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model Users{
-  id Int @default(autoincrement()) @id
-  email String @unique
-  password String
-  names String
+model User {
+  id          Int     @id @default(autoincrement())
+  email       String  @unique
+  password    String
+  names       String
+  phoneNumber String?
+  role        Role    @default(USER)
+  blog        Blog[]
+}
+
+model Blog {
+  id          Int    @id @default(autoincrement())
+  title       String
+  description String
+  userId      Int
+  user        User   @relation(fields: [userId], references: [id])
+}
+
+enum Role {
+  ADMIN
+  USER
 }
