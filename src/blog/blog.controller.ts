@@ -12,6 +12,11 @@ export class BlogController {
         return this.blogService.allBlogs()
     }
 
+    @Get(':id')
+    async getOneBlog(@Param('id') id: string){
+        return this.blogService.oneBlog(parseInt(id))
+    }
+
     @UseGuards(AuthGuard('jwt'))
     @Post()
     async createBlog(@Body() dto:blogDTO, @Req() req: Request){

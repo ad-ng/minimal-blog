@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { PrismaService } from 'src/prisma/prisma.service';
 
 @Injectable()
@@ -11,6 +11,20 @@ export class BlogService {
             data: myBlogs
         }
     }
+
+    async oneBlog(id){
+        const myBlog: object = await this.prisma.blog.findUnique({
+            where: { id }
+        })
+        if(!myBlog){
+            return new NotFoundException(`no blog with id: ${id} found`).getResponse()
+        }
+        return {
+            message: 'blog found successfully',
+            data: myBlog
+        }
+    }
+
     async addBlog(current,dto){
         const myBlog = await this.prisma.blog.create({
             data: {
