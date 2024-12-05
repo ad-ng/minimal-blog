@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Param, Post, Put, Req, UseGuards } from '@nestjs/common';
+import { Body, Controller, Delete, Get, Param, Post, Put, Req, UseGuards } from '@nestjs/common';
 import { BlogService } from './blog.service';
 import { AuthGuard } from '@nestjs/passport';
 import { Request } from 'express';
@@ -27,5 +27,11 @@ export class BlogController {
     @Put(':id')
     async updating(@Body() dto:blogDTO, @Param('id') id: string ){
         return this.blogService.updateBlog(parseInt(id),dto)
+    }
+
+    @UseGuards(AuthGuard('jwt'))
+    @Delete(':id')
+    async deleteBlog(@Param('id') id: string){
+        return this.blogService.deleteOne(parseInt(id))
     }
 }

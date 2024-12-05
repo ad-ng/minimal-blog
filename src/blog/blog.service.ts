@@ -54,4 +54,13 @@ export class BlogService {
             data: myBlog
         }
     }
+
+    async deleteOne(id){
+        const myBlog = await this.prisma.blog.delete({
+            where: { id }
+        })
+        return {
+            message: `blog with id: ${id} deleted successfully`
+        }
+    }
 }
