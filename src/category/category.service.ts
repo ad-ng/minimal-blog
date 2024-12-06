@@ -5,7 +5,7 @@ import { PrismaService } from 'src/prisma/prisma.service';
 export class CategoryService {
     constructor(private prisma: PrismaService){}
 
-    async allCategories(){
+    async allCategories():Promise<object>{
         const cat: object[] = await this.prisma.category.findMany()
         return {
             message: 'categories found successfully',
