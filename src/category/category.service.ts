@@ -54,4 +54,17 @@ export class CategoryService {
             data: category
         }
     }
+
+    async deleteOne(id):Promise<object>{
+        const checkCat = await this.prisma.category.findUnique({
+            where: { id }
+        })
+        if (!checkCat) throw new NotFoundException(`no category with id:${id} found !`).getResponse()
+        const category: object = await this.prisma.category.delete({
+            where: { id }
+        })
+        return {
+            message: `category with id:${id} deleted successfully`
+        }
+    }
 }

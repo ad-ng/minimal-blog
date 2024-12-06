@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Param, Post, Put, UseGuards } from '@nestjs/common';
+import { Body, Controller, Delete, Get, Param, Post, Put, UseGuards } from '@nestjs/common';
 import { CategoryService } from './category.service';
 import { AuthGuard } from '@nestjs/passport';
 import { categoryDTO } from './dto/category.dto';
@@ -27,5 +27,11 @@ export class CategoryController {
     @Put(':id')
     async updateCategory(@Body() dto:categoryDTO, @Param('id') id:string){
         return this.categoryService.updateOne(parseInt(id),dto)
+    }
+
+    @UseGuards(AuthGuard('jwt'))
+    @Delete(':id')
+    async deleteCategory(@Param('id') id:string){
+        return this.categoryService.deleteOne(parseInt(id,10))
     }
 }
