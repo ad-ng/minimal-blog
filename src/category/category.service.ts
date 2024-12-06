@@ -37,4 +37,21 @@ export class CategoryService {
             data: category
         }
     }
+
+    async updateOne(id, dto): Promise<object>{
+        const checkCat = await this.prisma.category.findUnique({
+            where: { id }
+        })
+        if (!checkCat) throw new NotFoundException(`no category with id:${id} found !`).getResponse()
+        const category:object = await this.prisma.category.update({
+            where: { id },
+            data: {
+                name: dto.name
+            }
+        }) 
+        return {
+            message: 'category updated successfully',
+            data: category
+        }
+    }
 }
