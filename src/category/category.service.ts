@@ -12,4 +12,15 @@ export class CategoryService {
             data: cat
         }
     }
+
+    async oneCategory(id):Promise<object>{
+        const cat: object= await this.prisma.category.findUnique({
+            where: { id }
+        })
+        
+        return {
+            message: 'category found',
+            data: cat
+        }
+    }
 }
