@@ -162,7 +162,7 @@ export class BlogController {
     })
     @UseGuards(AuthGuard('jwt'))
     @Delete(':id')
-    async deleteBlog(@Param('id') id: string){
+    async deleteBlog(@Param('id') id: string) {
         return this.blogService.deleteOne(parseInt(id))
     }
 }
