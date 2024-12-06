@@ -19,7 +19,7 @@ export class CategoryController {
 
     @UseGuards(AuthGuard('jwt'))
     @Post()
-    async addCategory(@Body()dto:any){
+    async addCategory(@Body()dto:categoryDTO){
         return this.categoryService.createCategory(dto)
     }
 
