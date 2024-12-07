@@ -121,6 +121,31 @@ export class CategoryController {
         return this.categoryService.updateOne(parseInt(id),dto)
     }
 
+    @ApiBearerAuth()
+    @ApiOperation({
+        summary: 'deleting category'
+    })
+    @ApiUnauthorizedResponse({
+        example: {
+            "message": "Unauthorized",
+            "statusCode": 401
+        }
+    })
+    @ApiBadRequestResponse({
+        example: {
+            "message": [
+                "name should not be empty",
+                "name must be a string"
+            ],
+            "error": "Bad Request",
+            "statusCode": 400
+        }
+    })
+    @ApiOkResponse({
+        example: {
+            "message": "category with id:4 deleted successfully"
+        }
+    })
     @UseGuards(AuthGuard('jwt'))
     @Delete(':id')
     async deleteCategory(@Param('id') id:string){
