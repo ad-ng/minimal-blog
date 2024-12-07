@@ -2,7 +2,7 @@ import { Body, Controller, Delete, Get, Param, Post, Put, UseGuards } from '@nes
 import { CategoryService } from './category.service';
 import { AuthGuard } from '@nestjs/passport';
 import { categoryDTO } from './dto/category.dto';
-import { ApiOkResponse, ApiOperation } from '@nestjs/swagger';
+import { ApiNotFoundResponse, ApiOkResponse, ApiOperation } from '@nestjs/swagger';
 
 @Controller('category')
 export class CategoryController {
@@ -22,6 +22,26 @@ export class CategoryController {
         return this.categoryService.allCategories()
     }
 
+    @ApiOperation({
+        summary: 'get category by id'
+    })
+    @ApiNotFoundResponse({
+        example: {
+            "statusCode": 404,
+            "message": "no category with id: 20 found"
+        }
+    })
+    @ApiOkResponse({
+        example: {
+            "message": "category found",
+            "data": {
+                "id": 3,
+                "name": "hot takes",
+                "createdAt": "2024-12-12T00:00:00.000Z",
+                "updatedAt": "2024-12-12T00:00:00.000Z"
+            }
+        }
+    })
     @Get(':id')
     async GetOneCategory(@Param('id') id: string){
         return this.categoryService.oneCategory(parseInt(id))
