@@ -84,6 +84,37 @@ export class CategoryController {
         return this.categoryService.createCategory(dto)
     }
 
+    @ApiBearerAuth()
+    @ApiOperation({
+        summary: 'updating a category'
+    })
+    @ApiUnauthorizedResponse({
+        example: {
+            "message": "Unauthorized",
+            "statusCode": 401
+        }
+    })
+    @ApiBadRequestResponse({
+        example: {
+            "message": [
+                "name should not be empty",
+                "name must be a string"
+            ],
+            "error": "Bad Request",
+            "statusCode": 400
+        }
+    })
+    @ApiOkResponse({
+        example: {
+            "message": "category updated successfully",
+            "data": {
+                "id": 4,
+                "name": "top 10",
+                "createdAt": "2024-12-07T15:36:40.323Z",
+                "updatedAt": "2024-12-07T15:46:01.464Z"
+            }
+        }
+    })
     @UseGuards(AuthGuard('jwt'))
     @Put(':id')
     async updateCategory(@Body() dto:categoryDTO, @Param('id') id:string){
