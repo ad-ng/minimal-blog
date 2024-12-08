@@ -1,22 +1,45 @@
+import { tr } from '@faker-js/faker/.';
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { PrismaService } from 'src/prisma/prisma.service';
 
 @Injectable()
 export class BlogService {
   constructor(private prisma: PrismaService) {}
-  async allBlogs() {
+  async allBlogs(query) {
+    const limit = query.limit || 5
+    const page = query.page || 1
     const myBlogs = await this.prisma.blog.findMany({
       orderBy: [{ id: 'desc' }],
+      take: limit,
+      skip: ((page - 1) * limit)
     });
+    const totalBlogs = await this.prisma.blog.count()
     return {
       message: 'blogs found successfully',
       data: myBlogs,
+      currentPage: page,
+      lastPage: Math.ceil(totalBlogs/limit),
+      totalBlogs
     };
   }
 
   async oneBlog(id) {
     const myBlog: object = await this.prisma.blog.findUnique({
       where: { id },
+      include: { 
+        user: {
+          select: {
+            names: true,
+            phoneNumber: true,
+            email: true
+          }
+        },
+        category: {
+          select: {
+            name: true
+          }
+        } 
+      },
     });
     if (!myBlog) {
       return new NotFoundException(
