@@ -46,15 +46,24 @@ export class BlogController {
   })
   @ApiOkResponse({
     example: {
-      message: 'data has been saved',
-      data: {
-        title: 'test title ',
-        description: 'test description ',
-        userId: 1,
-        categoryId: null,
-        created: '2024-12-06T08:13:57.839Z',
-        updated: '2024-12-06T08:13:57.839Z',
-      },
+      "message": "blog found successfully",
+      "data": {
+        "id": 20,
+        "title": "green beans",
+        "description": "Hearty mint and duck stew, slow-cooked with basil and bean shoots for a comforting, flavorful meal.",
+        "userId": 8,
+        "categoryId": 2,
+        "created": "2024-12-08T07:15:06.025Z",
+        "updated": "2024-12-08T07:15:06.025Z",
+        "user": {
+          "names": "Gilberto Littel",
+          "phoneNumber": "(332) 202-6914 x1442",
+          "email": "Charity_Luettgen@gmail.com"
+        },
+        "category": {
+          "name": "maroon"
+        }
+      }
     },
   })
   @ApiNotFoundResponse({
