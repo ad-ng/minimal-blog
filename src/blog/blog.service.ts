@@ -4,13 +4,17 @@ import { PrismaService } from 'src/prisma/prisma.service';
 @Injectable()
 export class BlogService {
   constructor(private prisma: PrismaService) {}
-  async allBlogs() {
+  async allBlogs(query) {
+    const { limit, page } = query
     const myBlogs = await this.prisma.blog.findMany({
       orderBy: [{ id: 'desc' }],
+      take: parseInt(limit, 10),
+      skip: (page - 1) * (parseInt(limit, 10))
     });
     return {
       message: 'blogs found successfully',
       data: myBlogs,
+      currentPage: page
     };
   }
 

@@ -37,8 +37,8 @@ export class BlogController {
       data: [],
     },
   })
-  async getAllBlogs(@Query() page: string, limit: string) {
-    return this.blogService.allBlogs(page, limit);
+  async getAllBlogs(@Query() query: any) {
+    return this.blogService.allBlogs(query);
   }
 
   @ApiOperation({
