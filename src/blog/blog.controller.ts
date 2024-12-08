@@ -12,8 +12,8 @@ import {
 } from '@nestjs/common';
 import { BlogService } from './blog.service';
 import { AuthGuard } from '@nestjs/passport';
-import { query, Request } from 'express';
-import { blogDTO } from './dto';
+import { Request } from 'express';
+import { blogDTO, BlogQueryDto } from './dto';
 import {
   ApiBadRequestResponse,
   ApiBearerAuth,
@@ -37,7 +37,7 @@ export class BlogController {
       data: [],
     },
   })
-  async getAllBlogs(@Query() query: any) {
+  async getAllBlogs(@Query() query: BlogQueryDto) {
     return this.blogService.allBlogs(query);
   }
 

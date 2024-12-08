@@ -8,14 +8,16 @@ export class BlogService {
     const { limit, page } = query
     const myBlogs = await this.prisma.blog.findMany({
       orderBy: [{ id: 'desc' }],
-      take: parseInt(limit, 10),
-      skip: (page - 1) * (parseInt(limit, 10))
+      take: limit,
+      skip: ((page - 1) * limit)
     });
+    const totalBlogs = await this.prisma.blog.count()
     return {
       message: 'blogs found successfully',
       data: myBlogs,
       currentPage: page,
-      totalBlogs: await this.prisma.blog.count()
+      lastPage: Math.ceil(totalBlogs/limit),
+      totalBlogs
     };
   }
 
