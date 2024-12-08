@@ -1,3 +1,4 @@
+import { tr } from '@faker-js/faker/.';
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { PrismaService } from 'src/prisma/prisma.service';
 
@@ -25,6 +26,20 @@ export class BlogService {
   async oneBlog(id) {
     const myBlog: object = await this.prisma.blog.findUnique({
       where: { id },
+      include: { 
+        user: {
+          select: {
+            names: true,
+            phoneNumber: true,
+            email: true
+          }
+        },
+        category: {
+          select: {
+            name: true
+          }
+        } 
+      },
     });
     if (!myBlog) {
       return new NotFoundException(
