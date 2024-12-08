@@ -5,7 +5,8 @@ import { PrismaService } from 'src/prisma/prisma.service';
 export class BlogService {
   constructor(private prisma: PrismaService) {}
   async allBlogs(query) {
-    const { limit, page } = query
+    const limit = query.limit || 5
+    const page = query.page || 1
     const myBlogs = await this.prisma.blog.findMany({
       orderBy: [{ id: 'desc' }],
       take: limit,
