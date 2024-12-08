@@ -6,12 +6,13 @@ import {
   Param,
   Post,
   Put,
+  Query,
   Req,
   UseGuards,
 } from '@nestjs/common';
 import { BlogService } from './blog.service';
 import { AuthGuard } from '@nestjs/passport';
-import { Request } from 'express';
+import { query, Request } from 'express';
 import { blogDTO } from './dto';
 import {
   ApiBadRequestResponse,
@@ -36,8 +37,8 @@ export class BlogController {
       data: [],
     },
   })
-  async getAllBlogs() {
-    return this.blogService.allBlogs();
+  async getAllBlogs(@Query() page: string, limit: string) {
+    return this.blogService.allBlogs(page, limit);
   }
 
   @ApiOperation({
