@@ -8,14 +8,20 @@ async function bootstrap() {
   const app = await NestFactory.create(AppModule);
   app.useGlobalPipes(
     new ValidationPipe({
-      whitelist: true
-    })
-  )
+      whitelist: true,
+    }),
+  );
   const config = new DocumentBuilder()
     .setTitle('minimal blog')
-    .setDescription('About this is a minimal blog backend built in node, Nest.js as a framework, Prisma as ORM and Postgres for database')
+    .setDescription(
+      'About this is a minimal blog backend built in node, Nest.js as a framework, Prisma as ORM and Postgres for database',
+    )
     .setVersion('1.0')
-    .setContact('NGOGA Adolphe', 'https://github.com/ad-ng','adolphengoga@gmail.com')
+    .setContact(
+      'NGOGA Adolphe',
+      'https://github.com/ad-ng',
+      'adolphengoga@gmail.com',
+    )
     .addBearerAuth()
     .build();
   const documentFactory = () => SwaggerModule.createDocument(app, config);
