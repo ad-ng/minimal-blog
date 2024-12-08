@@ -14,7 +14,8 @@ export class BlogService {
     return {
       message: 'blogs found successfully',
       data: myBlogs,
-      currentPage: page
+      currentPage: page,
+      totalBlogs: await this.prisma.blog.count()
     };
   }
 
