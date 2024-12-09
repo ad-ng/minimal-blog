@@ -26,7 +26,7 @@ export class BlogService {
   async oneBlog(id) {
     const myBlog: object = await this.prisma.blog.findUnique({
       where: { id },
-      include: { 
+      include: {
         user: {
           select: {
             names: true,
@@ -42,7 +42,7 @@ export class BlogService {
       },
     });
     if (!myBlog) {
-      return new NotFoundException(
+      throw new NotFoundException(
         `no blog with id: ${id} found`,
       ).getResponse();
     }
