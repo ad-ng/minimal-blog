@@ -1,12 +1,19 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
+import { take } from 'rxjs';
 import { PrismaService } from 'src/prisma/prisma.service';
 
 @Injectable()
 export class CategoryService {
   constructor(private prisma: PrismaService) {}
 
-  async allCategories(): Promise<object> {
-    const cat: object[] = await this.prisma.category.findMany();
+  async allCategories(query): Promise<object> {
+    const page = query.page || 1
+    const limit = query.limit || 10
+    const cat: object[] = await this.prisma.category.findMany({
+      orderBy: [{ id: 'desc' }],
+      take: limit,
+      skip: ((page - 1) * limit)
+    })
     return {
       message: 'categories found successfully',
       data: cat,

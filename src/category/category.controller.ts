@@ -6,6 +6,7 @@ import {
   Param,
   Post,
   Put,
+  Query,
   UseGuards,
 } from '@nestjs/common';
 import { CategoryService } from './category.service';
@@ -20,6 +21,8 @@ import {
   ApiOperation,
   ApiUnauthorizedResponse,
 } from '@nestjs/swagger';
+import { CatQueryDto } from './dto/catQuery.dto';
+import { query } from 'express';
 
 @Controller('category')
 export class CategoryController {
@@ -35,8 +38,8 @@ export class CategoryController {
     },
   })
   @Get()
-  async GetAllCategories() {
-    return this.categoryService.allCategories();
+  async GetAllCategories(@Query() query: CatQueryDto) {
+    return this.categoryService.allCategories(query);
   }
 
   @ApiOperation({
